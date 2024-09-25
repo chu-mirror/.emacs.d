@@ -40,6 +40,14 @@
 (setq python-shell-interpreter "uv")
 (setq python-shell-interpreter-args "run -q python -i")
 
+(use-package eglot
+  :custom (eglot-extend-to-xref t)
+  :bind (:map eglot-mode-map
+	      ("C-c h" . eldoc)
+	      ("C-c f" . xref-find-definitions))
+  :hook
+  ((c-mode . eglot-ensure)))
+
 
 (use-package helm
   :demand t
