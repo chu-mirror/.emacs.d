@@ -8,6 +8,7 @@
 (require 'use-package-ensure)
 (setq use-package-always-ensure t)
 
+
 ;; appearance
 
 (tool-bar-mode -1)
@@ -15,6 +16,7 @@
 (menu-bar-mode -1)
 (add-to-list 'default-frame-alist
 	     '(font . "DejaVu Sans Mono-17"))
+
 
 ;; workspace
 
@@ -55,6 +57,8 @@
   (evil-set-initial-state 'Info-mode 'emacs)
   (evil-set-initial-state 'help-mode 'emacs))
 
+(use-package magit)
+
 (use-package rime
   :custom
   (default-input-method "rime")
@@ -63,6 +67,7 @@
 	'(rime-predicate-after-alphabet-char-p
 	  rime-predicate-prog-in-code-p)))
 
+
 ;; customization
 
 (custom-set-variables
@@ -70,7 +75,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages '(evil helm-lsp rime))
+ '(package-selected-packages nil)
  '(warning-suppress-log-types '((python python-shell-prompt-regexp))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
