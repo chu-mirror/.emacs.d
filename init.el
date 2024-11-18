@@ -61,6 +61,7 @@
 ;;; Miscellaneous
 
 (setq dired-maybe-use-globstar t)
+(setq dired-listing-switches "-ahl")
 
 
 ;; startup actions
@@ -70,10 +71,11 @@
 
 ;; packages
 
-(setq dired-listing-switches "-ahl")
 
-(setq python-shell-interpreter "uv")
-(setq python-shell-interpreter-args "run -q python -i")
+(use-package python
+  :custom
+  (python-shell-interpreter "uv")
+  (python-shell-interpreter-args "run -q python -i"))
 
 (use-package eglot
   :custom (eglot-extend-to-xref t)
@@ -84,8 +86,8 @@
 	      ("C-c f" . xref-find-definitions))
   :hook
   ((c-mode . eglot-ensure)
+   (c++-mode . eglot-ensure)
    (python-mode . eglot-ensure)))
-
 
 (use-package helm
   :demand t
@@ -110,10 +112,9 @@
 (use-package rime
   :custom
   (default-input-method "rime")
-  :config
-  (setq rime-disable-predicates
-	'(rime-predicate-after-alphabet-char-p
-	  rime-predicate-prog-in-code-p)))
+  (rime-disable-predicates
+   '(rime-predicate-after-alphabet-char-p
+     rime-predicate-prog-in-code-p)))
 
 
 ;; customization
@@ -123,7 +124,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages '(eglot evil helm-lsp magit rime))
+ '(package-selected-packages '(eglot evil magit rime))
  '(warning-suppress-log-types '((python python-shell-prompt-regexp))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
