@@ -58,15 +58,17 @@
 (setq tab-bar-select-tab-modifiers '(control))
 (tab-bar-mode)
 
-;;; Miscellaneous
-
-(setq dired-maybe-use-globstar t)
-(setq dired-listing-switches "-ahl")
-
 
 ;; startup actions
 
 (setq inhibit-startup-screen t)
+
+
+;;; Miscellaneous
+
+(setq dired-maybe-use-globstar t)
+(setq dired-listing-switches "-ahl")
+(setq dired-isearch-filenames t)
 
 
 ;; packages
@@ -87,7 +89,12 @@
   :hook
   ((c-mode . eglot-ensure)
    (c++-mode . eglot-ensure)
-   (python-mode . eglot-ensure)))
+   (python-mode . eglot-ensure)
+   (lean4-mode . eglot-ensure)))
+
+(use-package lean4-mode
+  :vc (:url "https://github.com/leanprover/lean4-mode"
+            :rev :newest))
 
 (use-package helm
   :demand t
@@ -124,7 +131,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages '(eglot evil magit rime))
+ '(package-selected-packages nil)
+ '(package-vc-selected-packages
+   '((lean4-mode :url "https://github.com/leanprover/lean4-mode")))
  '(warning-suppress-log-types '((python python-shell-prompt-regexp))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
