@@ -1,12 +1,16 @@
 :PROPERTIES:
 :header-args:emacs-lisp: :noweb no-export :tangle yes
 :END:
+#+STARTUP: content
 
-#+begin_src emacs-lisp
-  <<dependencies>>
-#+end_src
+* About this file
+This file gives a detailed description of my emacs configuration,
+and moreover, thanks to the support for literate programming of org-mode,
+it's executable.
 
-* Package Management
+The structure of this file is simply a serial of loosely coupled commands,
+like all other people's emacs configuration. All dependencies are gathered
+and placed at the beginning for a cleaner tangling result.
 
 #+begin_src emacs-lisp
   (setq package-archives
@@ -14,7 +18,12 @@
           ("nongnu" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/nongnu/")
           ("melpa"  . "https://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))
   (package-initialize)
-  (require 'use-package-ensure)
+  <<dependencies>>
+#+end_src
+
+* Package Management
+
+#+begin_src emacs-lisp
   (setq use-package-always-ensure t)
 #+end_src
 
@@ -30,6 +39,7 @@
 
 * Workspace
 
+** Project
 All actions towards a particular codebase are gatherred in
 a project-based session. The meaning of project here follows
 the definition given by Emacs.
@@ -59,6 +69,7 @@ submodules of submodules.
   (add-to-list 'project-find-functions 'my--find-vc-root)
 #+end_src
 
+** Session
 Emacs only supports constant paths to search for the desktop file.
 So this is the most dynamic way I can use to specify search path.
 The custom here is to go to the root of the project, run Emacs, then
@@ -70,6 +81,7 @@ based on this directory.
   (desktop-save-mode 1)
 #+end_src
 
+** Editing
 Instead of editing multiple files at same time in different windows
 of a frame, I preserve screen space for referencing when editing.
 Multiple editings are seperated to different tabs.
@@ -78,12 +90,6 @@ Multiple editings are seperated to different tabs.
   (setq tab-bar-tab-hints t)
   (setq tab-bar-select-tab-modifiers '(control))
   (tab-bar-mode)
-#+end_src
-
-* Start Ups
-
-#+begin_src emacs-lisp
-  (setq inhibit-startup-screen t)
 #+end_src
 
 * Miscellaneous
