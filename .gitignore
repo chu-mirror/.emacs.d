@@ -9,3 +9,6 @@ rime
 .#*
 /transient/
 /projects
+tramp
+my-emacs.el
+.org-id-locations
