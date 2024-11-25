@@ -1,8 +1,11 @@
 (require 'org)
-(if (or (not (file-exists-p "my-emacs.el"))
-	(file-newer-than-file-p "my-emacs.org" "my-emacs.el"))
-    (org-babel-tangle-file "my-emacs.org"))
-(load-file "my-emacs.el")
+(let* ((conf-name "my-emacs.org")
+       (conf (expand-file-name conf-name user-emacs-directory))
+       (script (file-name-with-extension conf "el")))
+  (if (or (not (file-exists-p script))
+	  (file-newer-than-file-p conf script))
+      (org-babel-tangle-file conf))
+  (load-file script))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
