@@ -10,7 +10,10 @@ it's executable.
 
 The structure of this file is simply a serial of loosely coupled commands,
 like all other people's emacs configuration. All dependencies are gathered
-and placed at the beginning for a cleaner tangling result.
+and placed at the beginning to retain an uniform set of names thoughout
+the configuring. The same reason is also applied to helpers. All helper
+functions have a name starting with 'my', and if it's only used in this file,
+'my' is followed by '--', else '-'.
 
 #+begin_src emacs-lisp
   (setq package-archives
@@ -19,6 +22,7 @@ and placed at the beginning for a cleaner tangling result.
           ("melpa"  . "https://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))
   (package-initialize)
   <<dependencies>>
+  <<helpers>>
 #+end_src
 
 * Package Management
@@ -37,7 +41,7 @@ and placed at the beginning for a cleaner tangling result.
   	     '(font . "DejaVu Sans Mono-17"))
 #+end_src
 
-* Workspace
+* Workflow
 
 ** Project
 All actions towards a particular codebase are gatherred in
@@ -49,11 +53,10 @@ the definition given by Emacs.
 #+end_src
 
 Emacs can not find the true root of project in case there are
-submodules of submodules.
+submodules of submodules. This helper function recursively
+call 'project-try-vc' until the result unchanged.
 
-#+begin_src emacs-lisp
-  (setq project-mode-line t)
-
+#+begin_src emacs-lisp :tangle no :noweb-ref helpers
   (defun my-stabilize-on (f v)
     (let ((new-v (funcall f v)))
       (if (equal new-v v)
@@ -63,10 +66,13 @@ submodules of submodules.
   (defun my--project-try-vc (tag-d)
     (project-try-vc (caddr tag-d)))
   	
-  (defun my--find-vc-root (d)
+  (defun my-find-vc-root (d)
     (my-stabilize-on 'my--project-try-vc (project-try-vc d)))
+#+end_src
 
-  (add-to-list 'project-find-functions 'my--find-vc-root)
+#+begin_src emacs-lisp
+  (setq project-mode-line t)
+  (add-to-list 'project-find-functions 'my-find-vc-root)
 #+end_src
 
 ** Session
@@ -84,7 +90,7 @@ based on this directory.
 ** Editing
 Instead of editing multiple files at same time in different windows
 of a frame, I preserve screen space for referencing when editing.
-Multiple editings are seperated to different tabs.
+Different editing points are seperated to different tabs.
 
 #+begin_src emacs-lisp
   (setq tab-bar-tab-hints t)
